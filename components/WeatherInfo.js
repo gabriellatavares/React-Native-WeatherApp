@@ -9,7 +9,7 @@ import { Picker } from '@react-native-community/picker'
 
 export default function WeatherInfo({currentWeather, unitsSystem, setUnitsSystem}) {
   const {
-    main: {temp, feels_like, temp_min, temp_max},
+    main: {temp, feels_like,},
     weather: [details],
     name
   } = currentWeather

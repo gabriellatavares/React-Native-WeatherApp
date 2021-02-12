@@ -63,12 +63,12 @@ innerContainer: {
 numberDay: {
     fontSize: 20,
     paddingLeft: 15,
-    color: 'rgb(220, 116, 84)'
+    color: 'black'
 },
 numberNight: {
     fontSize: 20,
     paddingLeft: 35,
-    color: 'rgb(220, 116, 84)'
+    color: 'black'
 
 },
 image: {
