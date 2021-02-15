@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text, } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CurrentLocation from './CurrentLocation'
@@ -7,11 +6,11 @@ import SearchLocation from './SearchLocation'
 import { Ionicons } from '@expo/vector-icons';
 
 
-
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
+
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
@@ -22,12 +21,11 @@ function MyTabs() {
           iconName = focused ? 'search' : 'search-outline';
         }
 
-        // You can return any component that you like here!
         return <Ionicons name={iconName} size={size} color={color} />;
       },
     })}
     tabBarOptions={{
-      activeTintColor: 'tomato',
+      activeTintColor: '#A996E0',
       inactiveTintColor: 'gray',
     }}
   >
@@ -37,10 +35,12 @@ function MyTabs() {
   );
 }
 
-export default function App() {
+export default function Navigation() {
   return (
+
     <NavigationContainer>
       <MyTabs />
     </NavigationContainer>
+
   );
 }

@@ -6,8 +6,9 @@ import {
   Image } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 
-
 export default function WeatherInfo({currentWeather, unitsSystem, setUnitsSystem}) {
+  
+
   const {
     main: {temp, feels_like,},
     weather: [details],
@@ -16,6 +17,8 @@ export default function WeatherInfo({currentWeather, unitsSystem, setUnitsSystem
   const {icon, main } = details
 
   const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`
+  
+
   return (
     <>
     <View style={styles.WeatherInfo}>
@@ -25,21 +28,22 @@ export default function WeatherInfo({currentWeather, unitsSystem, setUnitsSystem
       style={styles.weatherIcon}
       source={{uri: iconUrl}}/>
         {/* <Text>Min: {temp_min}°. Max: {temp_max}°</Text> */}
-        <Text>Feels like: {feels_like}°</Text>
+        <Text style={{color: 'white'}}>Feels like: {feels_like}°</Text>
       <View style={{
         flexDirection: 'row',
         alignItems: 'center',
       }}>
         <Text style={styles.textPrimary}>{temp}</Text>
-        <Picker style={{flex: 0.3,} } selectedValue={unitsSystem} onValueChange={(item) => setUnitsSystem(item)} >
-          <Picker.Item label="°C" value='metric'/>
+        <Picker itemStyle={{color:'white'}} style={{flex: 0.3,} } selectedValue={unitsSystem} onValueChange={(item) => setUnitsSystem(item)} >
+          <Picker.Item  label="°C" value='metric'/>
           <Picker.Item label="°F" value='imperial'/>
         </Picker>
       </View>
     </View>
   </>
   )
-}
+    }
+
 
 const styles = StyleSheet.create({
   WeatherInfo: {
@@ -53,10 +57,14 @@ const styles = StyleSheet.create({
   textPrimary: {
     fontSize: 40,
     fontWeight: '500',
+    color: 'white',
+
   },
   textSecondary: {
     fontSize: 20,
-    marginTop: 10
+    marginTop: 10,
+    color: 'white'
+
   },
 
 })

@@ -5,16 +5,15 @@ import {
   Text, 
   View, 
   ActivityIndicator,
-  FlatList, 
+  FlatList,
 } from 'react-native';
 import * as Location from 'expo-location'
 import WeatherInfo from './components/WeatherInfo'
 import Forecast from './components/Forecast'
-// import GoogleInput from './components/GoogleInput'
+import {LinearGradient} from 'expo-linear-gradient'
 
 
-const WEATHER_API_KEY = 'b9b5ce6dc941edff964bd3a68a1af92e'
-//api stopped working 16909a97489bed275d13dbdea4e01f59
+const WEATHER_API_KEY = '16909a97489bed275d13dbdea4e01f59'
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 const FORECAST_URL =  'https://api.openweathermap.org/data/2.5/onecall?'
 
@@ -27,7 +26,6 @@ export default function CurrentLocation() {
   const [forecast, setForecast] = useState(null)
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
-  // let newLatnewLong = false;
 
 
   
@@ -35,16 +33,7 @@ export default function CurrentLocation() {
     load()
   }, [unitsSystem, longitude, latitude])
 
-  // function useNewLocation (newLat, newLong) {
-  //   console.log('from function newlocantion', newLat, newLong)
-  //   setLatitude(newLat)
-  //   console.log('from new lat', latitude)
-  //   setLongitude(newLong)
-  //   console.log('from new long', longitude)
-  //   // newLatnewLong = true;
-  //   console.log(newLatnewLong)
-  //   load();
-  // }
+
 
   async function load(){
     setCurrentWeather(null)
@@ -57,11 +46,9 @@ export default function CurrentLocation() {
       }
       const location = await Location.getCurrentPositionAsync()
       
-      // if (newLatnewLong === false){
       setLatitude(location.coords.latitude)
       setLongitude(location.coords.longitude)
-      // newLatnewLong = false;
-      // }
+ 
     
       
       const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
@@ -93,10 +80,16 @@ export default function CurrentLocation() {
   if (currentWeather && forecast){
     return (
 
-      <View style={styles.container}>
+      <LinearGradient
+       colors={['#A996E0', '#E89F87']}
+       style={styles.container}
+       start={{ x: 0, y: 0 }}
+       end={{ x: 1, y: 1 }}
+      >
+        <View style={styles.container}>
+     
          <StatusBar style="auto" />
            <View style={styles.main}>
-             {/* <GoogleInput useNewLocation={useNewLocation} /> */}
             <WeatherInfo 
             currentWeather={currentWeather} 
             unitsSystem={unitsSystem} 
@@ -108,7 +101,9 @@ export default function CurrentLocation() {
           renderItem = {({item}) => 
           <Forecast detail = {item} />
           }/> 
+                
       </View>
+      </LinearGradient>
     )
   } else if (errorMessage){
     return (
@@ -132,8 +127,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     justifyContent: 'center',
-    paddingTop: 150,
-    backgroundColor: '#e8e8e4'
+    paddingTop: 80,
 
   },
   main: {

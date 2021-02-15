@@ -53,7 +53,7 @@ date: {
     fontSize: 15,
     fontWeight: 'bold',
     paddingLeft: 20,
-    color: 'rgb(220, 116, 84)'
+    color: 'white'
 },
 innerContainer: {
     flexDirection: 'row',
@@ -63,12 +63,12 @@ innerContainer: {
 numberDay: {
     fontSize: 20,
     paddingLeft: 15,
-    color: 'black'
+    color: 'white'
 },
 numberNight: {
     fontSize: 20,
     paddingLeft: 35,
-    color: 'black'
+    color: 'white'
 
 },
 image: {
