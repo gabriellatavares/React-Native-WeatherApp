@@ -5,7 +5,6 @@ import {
   StyleSheet, 
   Image } from 'react-native'
 import { Picker } from '@react-native-community/picker'
-import { FontAwesome5 } from '@expo/vector-icons'
 
 
 export default function WeatherInfo({currentWeather, unitsSystem, setUnitsSystem}) {
