@@ -11,8 +11,9 @@ import WeatherInfo from './components/WeatherInfo'
 import Forecast from './components/Forecast'
 import Reset from './components/Reset'
 import {LinearGradient} from 'expo-linear-gradient'
+import {WEATHER_API_KEY} from 'react-native-dotenv'
 
-const WEATHER_API_KEY = '16909a97489bed275d13dbdea4e01f59'
+
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 const FORECAST_URL =  'https://api.openweathermap.org/data/2.5/onecall?'
 
@@ -27,17 +28,17 @@ export default function SearchLocation() {
 
     useEffect(() => {
       loading()
-    }, [unitsSystem, newLongitude, newLatitude])
+    }, [ newLongitude, newLatitude])
   
 
     async function loading(){
       setCurrentWeather(null)
-      const weatherUrl = `${BASE_WEATHER_URL}lat=${newLatitude}&lon=${newLongitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
+      const weatherUrl = `${BASE_WEATHER_URL}lat=${newLatitude}&lon=${newLongitude}&units=metric&appid=${WEATHER_API_KEY}`
 
       const response = await fetch(weatherUrl)
       const result = await response.json()
 
-      const forecastUrl = `${FORECAST_URL}lat=${newLatitude}&lon=${newLongitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
+      const forecastUrl = `${FORECAST_URL}lat=${newLatitude}&lon=${newLongitude}&units=metric&appid=${WEATHER_API_KEY}`
       const response2 = await fetch(forecastUrl)
       const result2 = await response2.json()
 
@@ -78,7 +79,8 @@ export default function SearchLocation() {
         <FlatList data = {forecast.daily} 
        keyExtractor= {item => item.dt.toString()}
        renderItem = {({item}) => 
-       <Forecast detail = {item} />
+       <Forecast detail = {item}
+       unitsSystem={unitsSystem} />
        }/> 
    </View>
    </LinearGradient>
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     justifyContent: 'center',
-    paddingTop: 80,
+    paddingTop: 70,
   },
   main: {
     justifyContent: 'center',

@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
 
@@ -17,6 +18,7 @@ export default class Forecast extends React.Component {
     })
   }
   render() {
+      if (this.props.unitsSystem == 'metric'){
     return(
         <View style = {styles.card}>
             <View style = {styles.container}>
@@ -32,7 +34,27 @@ export default class Forecast extends React.Component {
                 </View>
             </View>  
         </View>
-    )
+    )}
+    else {
+        let dayPrev = Math.round(this.props.detail.temp.day)
+        let dayNight = Math.round(this.props.detail.temp.night)
+        return (
+            <View style = {styles.card}>
+            <View style = {styles.container}>
+                <View style = {styles.innerContainer}>
+                    <Text style = {styles.date}>{this.state.dayName}</Text>
+                </View>
+
+                <Image style = {styles.image} source = {{uri:"https://openweathermap.org/img/wn/" + this.props.detail.weather[0].icon + ".png"}}/>
+                
+                <View style = {styles.innerContainer}>
+                    <Text style = {styles.numberDay}>{Math.round((dayPrev / 5) * 9 + 32)}</Text>
+                    <Text style = {styles.numberNight}> {Math.round((dayNight / 5) * 9 + 32)}</Text>
+                </View>
+            </View>  
+        </View>
+        )
+    }
 }
 }
 

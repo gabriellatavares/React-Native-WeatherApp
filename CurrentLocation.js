@@ -11,9 +11,9 @@ import * as Location from 'expo-location'
 import WeatherInfo from './components/WeatherInfo'
 import Forecast from './components/Forecast'
 import {LinearGradient} from 'expo-linear-gradient'
+import {WEATHER_API_KEY} from 'react-native-dotenv'
 
 
-const WEATHER_API_KEY = '16909a97489bed275d13dbdea4e01f59'
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 const FORECAST_URL =  'https://api.openweathermap.org/data/2.5/onecall?'
 
@@ -31,7 +31,7 @@ export default function CurrentLocation() {
   
   useEffect(() => {
     load()
-  }, [unitsSystem, longitude, latitude])
+  }, [ longitude, latitude])
 
 
 
@@ -48,15 +48,13 @@ export default function CurrentLocation() {
       
       setLatitude(location.coords.latitude)
       setLongitude(location.coords.longitude)
- 
-    
       
-      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
+      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=metric&appid=${WEATHER_API_KEY}`
 
       const response = await fetch(weatherUrl)
       const result = await response.json()
 
-      const forecastUrl = `${FORECAST_URL}lat=${latitude}&lon=${longitude}&units=${unitsSystem}&appid=${WEATHER_API_KEY}`
+      const forecastUrl = `${FORECAST_URL}lat=${latitude}&lon=${longitude}&units=metric&appid=${WEATHER_API_KEY}`
       const response2 = await fetch(forecastUrl)
       const result2 = await response2.json()
 
@@ -99,7 +97,8 @@ export default function CurrentLocation() {
            <FlatList data = {forecast.daily} 
           keyExtractor= {item => item.dt.toString()}
           renderItem = {({item}) => 
-          <Forecast detail = {item} />
+          <Forecast detail = {item}
+          unitsSystem={unitsSystem} />
           }/> 
                 
       </View>
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     justifyContent: 'center',
-    paddingTop: 80,
+    paddingTop: 50,
 
   },
   main: {
