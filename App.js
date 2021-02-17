@@ -3,7 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CurrentLocation from './CurrentLocation'
 import SearchLocation from './SearchLocation'
+import SavedLocations from './components/SavedLocations'
 import { Ionicons } from '@expo/vector-icons';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -19,6 +21,8 @@ function MyTabs() {
           iconName = focused ? 'home' : 'home-outline';
         } else if (route.name === 'Search') {
           iconName = focused ? 'search' : 'search-outline';
+        } else {
+          iconName = focused ? 'bookmark' : 'bookmark-outline'
         }
 
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -31,6 +35,7 @@ function MyTabs() {
   >
       <Tab.Screen name="Home" component={CurrentLocation} />
       <Tab.Screen name="Search" component={SearchLocation} />
+      <Tab.Screen name="Saved" component={SavedLocations} />
     </Tab.Navigator>
   );
 }

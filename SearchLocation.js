@@ -10,6 +10,7 @@ import GoogleInput from './components/GoogleInput'
 import WeatherInfo from './components/WeatherInfo'
 import Forecast from './components/Forecast'
 import Reset from './components/Reset'
+import Saved from './components/Saved'
 import {LinearGradient} from 'expo-linear-gradient'
 import {WEATHER_API_KEY} from 'react-native-dotenv'
 
@@ -24,6 +25,8 @@ export default function SearchLocation() {
     const [newLongitude, setNewLong] = useState(null) 
     const [currentWeather, setCurrentWeather] = useState(null)
     const [forecast, setForecast] = useState(null)
+    const [name, setName] = useState(null)
+    const [temp, setTemp] = useState(null)
 
 
     useEffect(() => {
@@ -44,6 +47,10 @@ export default function SearchLocation() {
 
       if(response.ok) {
         setCurrentWeather(result)
+        setName(result.name)
+        setTemp(result.main.temp)
+  
+
       }
 
       if(response2.ok){
@@ -69,6 +76,9 @@ export default function SearchLocation() {
                 newLongitude={newLongitude}
                 setNewLong={setNewLong}
           />
+            <Saved 
+            name={name}
+            temp={temp}/>
           </View>
          <WeatherInfo 
          currentWeather={currentWeather} 
@@ -122,9 +132,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   reset: {
-    alignSelf: 'flex-end',
-    marginTop: -100,
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    marginTop: -100, 
     marginRight: 20,
+    marginLeft: 20,
     paddingBottom: 100,
 
     },
@@ -134,5 +146,5 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     color: 'white'
 
-  }
+  },
 });
