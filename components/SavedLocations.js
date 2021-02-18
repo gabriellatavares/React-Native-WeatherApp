@@ -1,17 +1,18 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useSaved } from '../context/SavedCityContext'
+import { citySaved } from '../context/CitiesContext'
+import ListSaved from './ListSaved'
 
-
-//managed to save cities on async storage,
-//now the plan is to show all cities here in this page, 
-//and delete city if the user wants to
 
 export default function SavedLocations() {
 
 
-  let flag;
+  const {cities, setCities} = citySaved()
+  const {isSaved, setIsSaved} = useSaved()
+
 
   useEffect(() => {
     getCity()
@@ -21,8 +22,8 @@ export default function SavedLocations() {
     try {
       const value = await AsyncStorage.getItem('storedCities')
       if (value !== null){
-        console.log('from value',value)
-        flag = true
+        let city = JSON.parse(value)
+        setCities(city)
       }
     } catch(e){
     }
@@ -32,15 +33,15 @@ export default function SavedLocations() {
     let empty = ''
     try {
       let cityStored = await AsyncStorage.setItem('storedCities', empty)
-      flag = false
-      console.log(flag)
+      setCities(null)
+      setIsSaved(0)
     } catch (e){
       alert(e)
     }
   }
 
 
-  if (flag == false){
+  if (isSaved === 0){
     return (
       <View >
         <Text style={styles.text}>
@@ -50,6 +51,7 @@ export default function SavedLocations() {
     )
   } else {
   return (
+    <>
     <View style={styles.container}>
       <Text style={styles.title}>Saved cities</Text>
       <TouchableOpacity
@@ -58,6 +60,10 @@ export default function SavedLocations() {
     <Ionicons name="trash" size={30} color={'#E89F87'} />
     </TouchableOpacity> 
     </View>
+    <View>
+      <ListSaved />
+    </View>
+    </>
   )
 }
 }

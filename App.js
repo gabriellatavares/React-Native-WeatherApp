@@ -5,6 +5,8 @@ import CurrentLocation from './CurrentLocation'
 import SearchLocation from './SearchLocation'
 import SavedLocations from './components/SavedLocations'
 import { Ionicons } from '@expo/vector-icons';
+import SavedCityProvider from './context/SavedCityContext'
+import SavedProvider from './context/CitiesContext'
 
 
 
@@ -44,7 +46,11 @@ export default function Navigation() {
   return (
 
     <NavigationContainer>
-      <MyTabs />
+      <SavedProvider>
+      <SavedCityProvider>
+        <MyTabs />
+      </SavedCityProvider>
+      </SavedProvider>
     </NavigationContainer>
 
   );

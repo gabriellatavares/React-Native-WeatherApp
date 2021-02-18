@@ -2,9 +2,13 @@ import React, {useState, } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useSaved } from '../context/SavedCityContext'
+import { citySaved } from '../context/CitiesContext'
 
 
 export default function Saved({name, temp}) {
+  const {isSaved, setIsSaved} = useSaved()
+  const {cities, setCities} = citySaved()
 
   
   const onPress = async () => {
@@ -18,9 +22,9 @@ export default function Saved({name, temp}) {
         cityStored = []
         cityStored = JSON.stringify(cityStored)
       }
-      let cities = JSON.parse(cityStored)
+      let citie = JSON.parse(cityStored)
       let isThere = false
-      cities.forEach(function (item, index) {
+      citie.forEach(function (item, index) {
         if (item[0] === cityArr[0]){
           alert('City is already saved!')
           isThere = true
@@ -28,10 +32,13 @@ export default function Saved({name, temp}) {
         } 
       })
       if (isThere === false){
-        cities.push(cityArr)
+        citie.push(cityArr)
       }
-      const trial = JSON.stringify(cities)
+      const trial = JSON.stringify(citie)
       await AsyncStorage.setItem('storedCities', trial)
+      setIsSaved('saved')
+      setCities(citie)
+      console.log(typeof citie)
     } catch (e){
       alert(e)
     }
