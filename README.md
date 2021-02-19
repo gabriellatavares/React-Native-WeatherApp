@@ -1,6 +1,6 @@
 # Description:
 
-Weather app developed in React Native with Expo
+Weather app developed in React Native with Expo, using AsyncStorage to persist data.
 
 # API used:
 
