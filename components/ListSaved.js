@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { StyleSheet, Text, View,  SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
 import { citySaved } from '../context/CitiesContext'
 import { Ionicons } from '@expo/vector-icons';
+import { useSaved } from '../context/SavedCityContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {LinearGradient} from 'expo-linear-gradient'
 
@@ -11,6 +12,23 @@ import {LinearGradient} from 'expo-linear-gradient'
 export default function ListSaved() {
 
   const {cities, setCities} = citySaved()
+  const {isSaved, setIsSaved} = useSaved()
+
+  const remove = (idx) => {
+    const temp = [...cities]
+    temp.splice(idx, 1)
+    AsyncStorage.setItem('storedCities', JSON.stringify(temp)).then(() =>{
+      setCities([...temp])
+    }).catch(error => console.log(error))
+    
+    console.log('from cities', cities)
+    if (cities.length <= 1){
+      setIsSaved(0)
+    }
+  }
+
+
+
 
   const list = () => {
     if (cities !== null){
@@ -26,11 +44,11 @@ export default function ListSaved() {
         
         <View style={styles.contain}>
           <View>
-            <Text> 
             <TouchableOpacity style={{padding: 15}}>
+              <Text onPress={()=> remove(idx)}> 
               <Ionicons name="trash" size={25} color={'white'}/>
+              </Text>
               </TouchableOpacity>
-            </Text>
           </View>
           <View>
             <Text style={styles.text}>{element[0]}</Text>
@@ -46,10 +64,12 @@ export default function ListSaved() {
 
  
 
-if (cities === null){
+if (cities == null){
+  console.log(cities)
   return (
     <View>
-      <Text>Nothing to see here! </Text>
+      <Text style={styles.nothing}>Nothing to see here yet. Please save some of your favorite cities and check-out later.
+</Text>
     </View>
   )
 
@@ -92,5 +112,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 0,
     paddingRight: 20,
+  },
+  nothing: {
+    padding: 50,
+    fontSize: 18,
+    fontStyle: 'italic',
+    color: 'gray'
   }
 })

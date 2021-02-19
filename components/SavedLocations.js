@@ -24,6 +24,7 @@ export default function SavedLocations() {
       if (value !== null){
         let city = JSON.parse(value)
         setCities(city)
+        console.log('from city state', cities.length)
       }
     } catch(e){
     }
@@ -42,16 +43,18 @@ export default function SavedLocations() {
 
 
   if (isSaved === 0){
+    console.log(isSaved)
     return (
       <View >
         <Text style={styles.text}>
-          Nothing to see here yet. Please save some of your favorite cities and check-out later.
+          Cleared all cities. Nothing to see here anymore. Please save some of your favorite cities and check-out later.
         </Text>
       </View>
     )
   } else {
   return (
     <>
+    
     <View style={styles.container}>
       <Text style={styles.title}>Saved cities</Text>
       <TouchableOpacity
